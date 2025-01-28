@@ -28,7 +28,7 @@ export interface IFeaturesProps
   features: Array<IFeatureProps>
   columns?: ResponsiveValue<number>
   spacing?: string | number
-  aside?: React.ReactChild
+  aside?: React.ReactNode
   reveal?: React.FC<any>
   iconSize?: SystemProps['boxSize']
   innerWidth?: SystemProps['maxW']

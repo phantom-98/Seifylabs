@@ -5,8 +5,8 @@ import { DatePicker, DatePickerCalendar, DatePickerTimeField } from "@saas-ui/da
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import { getProject, updateProject } from "utils/firestore";
 import { formatWalletAddress } from "utils/web3";
-import { parseDateTime } from "@saas-ui/date-picker";
 import { ProjectType } from "utils/types";
+import { parseDate } from "@internationalized/date";
 
 const Project = () => {
 
@@ -89,7 +89,7 @@ const Project = () => {
                             <Text fontSize={'2xl'}>Timeline</Text>
                             <Text fontSize={'lg'} mt={'-2'}>By when should payee deliver the work?</Text>
                             <Box bg={'#171717'} p={4}>
-                                <DatePicker value={parseDateTime(project?.deadline ?? '2024-07-25T12:00:00')} isReadOnly>
+                                <DatePicker value={ project?.deadline ? parseDate(project.deadline) : null } isReadOnly>
                                     <DatePickerCalendar />
                                     <DatePickerTimeField />
                                 </DatePicker>
@@ -158,6 +158,9 @@ const Project = () => {
             </Flex>
         </Container>
     )
+
+
+
 }
 
 export default Project;

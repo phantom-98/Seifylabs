@@ -220,7 +220,7 @@ const CreateProject = () => {
                                     <Text fontSize={'lg'} mt={'-2'}>Copy the link below and share with Payee</Text>
                                     <Flex alignItems={"center"} gap={2} border={`1px solid white`} borderRadius={'full'} py={1} px={5} my={6}>
                                         <Text>{`${window.location.origin}/project/${link}`}</Text>
-                                        <Tooltip hasArrow label="Copied" isOpen={tooltip} bg={'black'} placement="top" borderRadius={6}>
+                                        <Tooltip isOpen={tooltip} hasArrow bg={'black'} placement="top" borderRadius={6} label="Copied">
                                             <CopyIcon color={'#8952e0'} cursor={'pointer'} onClick={() => {
                                                 navigator.clipboard.writeText(`${window.location.origin}/project/${link}`);
                                                 setTooltip(true);

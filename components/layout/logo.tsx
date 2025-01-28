@@ -2,14 +2,14 @@ import * as React from 'react'
 import { Box, Flex, Heading, VisuallyHidden } from '@chakra-ui/react'
 import { Link } from '@saas-ui/react'
 
-export interface LogoProps {
+export interface ILogoProps {
   href?: string
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
 import siteConfig from 'data/config'
 
-export const Logo = ({ href = '/', onClick }: LogoProps) => {
+export const Logo = ({ href = '/', onClick }: ILogoProps) => {
   let logo
   if (siteConfig.logo) {
     logo = <Box as={siteConfig.logo} height="32px" mt="-4px" />

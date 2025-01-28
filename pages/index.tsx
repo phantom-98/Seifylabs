@@ -10,7 +10,9 @@ import {
   Tag,
   useClipboard,
   VStack,
-  Image
+  Image,
+  Button,
+  useStatStyles
 } from "@chakra-ui/react";
 import { SEO } from "components/seo/seo";
 
@@ -42,10 +44,12 @@ import {
 } from "components/highlights";
 import {
   AnnouncementBanner,
-  AnnouncementBannerProps
+  IAnnouncementBannerProps
 } from "components/announcement-banner";
+import { SignupModal } from "components/profile";
+import useApp from "components/context/app-context";
 
-const Home: React.FC<{announcement: AnnouncementBannerProps}> = (props) => {
+const Home: React.FC<{announcement: IAnnouncementBannerProps}> = (props) => {
   const { announcement } = props;
   return (
     <Box>
@@ -70,6 +74,8 @@ const Home: React.FC<{announcement: AnnouncementBannerProps}> = (props) => {
 };
 
 const HeroSection: React.FC = () => {
+  const [open, setOpen] = React.useState(false);
+  const { user } = useApp();
   return (
     <Box position="relative" overflow="hidden">
       <BackgroundGradient height="100%" zIndex="-1" />
@@ -101,9 +107,17 @@ const HeroSection: React.FC = () => {
             </div>
 
               <ButtonGroup spacing={4} alignItems="center">
-                <ButtonLink colorScheme="primary" size="lg" href="/signup">
-                  Connect Wallet
-                </ButtonLink>
+                {user ? (
+                  <ButtonLink colorScheme="primary" size="lg" href='/dashboard'>
+                    Go to dashboard
+                  </ButtonLink>
+                ) : (
+                  <Button colorScheme="primary" size="lg" onClick={() => {
+                    setOpen(true);
+                  }}>
+                    Sign up with wallet
+                  </Button>
+                )}
                 <ButtonLink
                   size="lg"
                   href="https://demo.saas-ui.dev"
@@ -186,6 +200,7 @@ const HeroSection: React.FC = () => {
         ]}
         reveal={FallInPlace}
       />
+      <SignupModal open={open} setOpen={setOpen}/>
     </Box>
   );
 };

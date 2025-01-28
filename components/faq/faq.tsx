@@ -1,13 +1,13 @@
 import { chakra, SimpleGrid } from '@chakra-ui/react'
-import { Section, SectionProps, SectionTitle } from 'components/section'
+import { Section, ISectionProps, SectionTitle } from 'components/section'
 
-interface FaqProps extends Omit<SectionProps, 'title' | 'children'> {
+interface IFaqProps extends Omit<ISectionProps, 'title' | 'children'> {
   title?: React.ReactNode
   description?: React.ReactNode
   items: { q: React.ReactNode; a: React.ReactNode }[]
 }
 
-export const Faq: React.FC<FaqProps> = (props) => {
+export const Faq: React.FC<IFaqProps> = (props) => {
   const {
     title = 'Frequently asked questions',
     description,

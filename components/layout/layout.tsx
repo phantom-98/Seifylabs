@@ -3,16 +3,16 @@ import { ReactNode } from 'react'
 
 import { SkipNavContent, SkipNavLink } from '@chakra-ui/skip-nav'
 
-import { Header, HeaderProps } from './header'
-import { Footer, FooterProps } from './footer'
+import { Header, IHeaderProps } from './header'
+import { Footer, IFooterProps } from './footer'
 
-interface LayoutProps {
+interface ILayoutProps {
   children: ReactNode
-  headerProps: HeaderProps
-  footerProps: FooterProps
+  headerProps: IHeaderProps
+  footerProps: IFooterProps
 }
 
-export const Layout: React.FC<LayoutProps> = (props) => {
+export const Layout: React.FC<ILayoutProps> = (props) => {
   const { children, headerProps, footerProps } = props
   return (
     <Box>

@@ -30,13 +30,13 @@ import siteConfig from 'data/config'
 import { Logo } from 'components/layout/logo'
 import { Link } from '@saas-ui/react'
 
-interface NavLinkProps extends LinkProps {
+interface INavLinkProps extends LinkProps {
   label: string
   href?: string
   isActive?: boolean
 }
 
-function NavLink({ href, children, isActive, ...rest }: NavLinkProps) {
+function NavLink({ href, children, isActive, ...rest }: INavLinkProps) {
   const { pathname } = useRouter()
   const bgActiveHoverColor = useColorModeValue('gray.100', 'whiteAlpha.100')
 
@@ -66,12 +66,12 @@ function NavLink({ href, children, isActive, ...rest }: NavLinkProps) {
   )
 }
 
-interface MobileNavContentProps {
+interface IMobileNavContentProps {
   isOpen?: boolean
   onClose?: () => void
 }
 
-export function MobileNavContent(props: MobileNavContentProps) {
+export function MobileNavContent(props: IMobileNavContentProps) {
   const { isOpen, onClose = () => {} } = props
   const closeBtnRef = React.useRef<HTMLButtonElement>(null)
   const { pathname } = useRouter()

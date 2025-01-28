@@ -8,9 +8,9 @@ export default class Document extends NextDocument {
       <Html lang="en">
         <Head>
           <link
-            rel="apple-touch-icon"
+            rel="apple-icon"
             sizes="76x76"
-            href="/static/favicons/apple-touch-icon.png"
+            href="/static/favicons/apple-icon.png"
           />
           <link
             rel="icon"

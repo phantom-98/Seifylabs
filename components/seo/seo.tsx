@@ -2,9 +2,9 @@ import React from 'react'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import siteConfig from 'data/config'
 
-export interface SEOProps extends NextSeoProps {}
+export interface ISEOProps extends NextSeoProps {}
 
-export const SEO = ({ title, description, ...props }: SEOProps) => (
+export const SEO = ({ title, description, ...props }: ISEOProps) => (
   <NextSeo
     title={title}
     description={description}

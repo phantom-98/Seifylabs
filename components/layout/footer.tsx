@@ -13,11 +13,11 @@ import { Link, LinkProps } from '@saas-ui/react'
 
 import siteConfig from 'data/config'
 
-export interface FooterProps extends BoxProps {
+export interface IFooterProps extends BoxProps {
   columns?: number
 }
 
-export const Footer: React.FC<FooterProps> = (props) => {
+export const Footer: React.FC<IFooterProps> = (props) => {
   const { columns = 2, ...rest } = props
   return (
     <Box bg="white" _dark={{ bg: 'gray.900' }} {...rest}>
@@ -47,15 +47,15 @@ export const Footer: React.FC<FooterProps> = (props) => {
   )
 }
 
-export interface CopyrightProps {
+export interface ICopyrightProps {
   title?: React.ReactNode
   children: React.ReactNode
 }
 
-export const Copyright: React.FC<CopyrightProps> = ({
+export const Copyright: React.FC<ICopyrightProps> = ({
   title,
   children,
-}: CopyrightProps) => {
+}: ICopyrightProps) => {
   let content
   if (title && !children) {
     content = `&copy; ${new Date().getFullYear()} - ${title}`

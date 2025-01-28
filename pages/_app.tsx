@@ -5,6 +5,7 @@ import { SaasProvider } from "@saas-ui/react";
 import { Layout } from "components/layout";
 
 import theme from "../theme";
+import { AppProvider } from "components/context/app-context";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { header, footer } = pageProps;
@@ -12,12 +13,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SaasProvider theme={theme}>
       <AuthProvider>
-        <Layout
-          headerProps={header}
-          footerProps={footer}
-        >
-          <Component {...pageProps} />
-        </Layout>
+        <AppProvider>
+          <Layout
+            headerProps={header}
+            footerProps={footer}
+          >
+            <Component {...pageProps} />
+          </Layout>
+        </AppProvider>
       </AuthProvider>
     </SaasProvider>
   );

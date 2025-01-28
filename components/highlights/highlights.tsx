@@ -12,14 +12,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { transparentize } from "@chakra-ui/theme-tools";
-import { Section, SectionProps } from "components/section";
-import { Testimonial, TestimonialProps } from "components/testimonials";
+import { Section, ISectionProps } from "components/section";
+import { Testimonial, ITestimonialProps } from "components/testimonials";
 
-export interface HighlightBoxProps
+export interface IHighlightBoxProps
   extends GridItemProps,
     Omit<CardProps, "title"> {}
 
-export const HighlightsItem: React.FC<HighlightBoxProps> = (props) => {
+export const HighlightsItem: React.FC<IHighlightBoxProps> = (props) => {
   const { children, title, ...rest } = props;
   return (
     <GridItem
@@ -45,7 +45,7 @@ export const HighlightsItem: React.FC<HighlightBoxProps> = (props) => {
 };
 
 export const HighlightsTestimonialItem: React.FC<
-  HighlightBoxProps & TestimonialProps & { gradient: [string, string] }
+  IHighlightBoxProps & ITestimonialProps & { gradient: [string, string] }
 > = (props) => {
   const {
     name,
@@ -95,7 +95,7 @@ export const HighlightsTestimonialItem: React.FC<
   );
 };
 
-export const Highlights: React.FC<SectionProps> = (props) => {
+export const Highlights: React.FC<ISectionProps> = (props) => {
   const { children, ...rest } = props;
 
   return (

@@ -4,7 +4,7 @@ const reviews = {
     {
       name: 'User #2912',
       description: '0x4B...D2dB      ',
-      avatar: '/static/images/MetaMask.png',
+      avatar: '/static/images/metamask.png',
       children: (
         <>
           The escrow platform made our transaction seamless. The process was straightforward, and the security features gave us peace of mind.

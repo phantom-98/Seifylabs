@@ -2,11 +2,13 @@ import * as React from "react";
 import { Button, Container, Flex, Image, Table, TableContainer, Tag, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { SearchInput } from "@saas-ui/react";
 import { ButtonLink } from "components/button-link";
-import db from "utils/firestore";
-import { collection, doc, endBefore, getCountFromServer, getDocs, limit, orderBy, query, QueryDocumentSnapshot, QuerySnapshot, startAfter, startAt, where } from "firebase/firestore"; 
-import { ProjectType } from "utils/utils";
+import { genQuery, getDocuments, getProjectsCount } from "utils/firestore";
+import { QueryDocumentSnapshot } from "firebase/firestore";
+import { ProjectType } from "utils/types";
+import useApp from "components/context/app-context";
 
 const Dashboard = () => {
+    const { user, setUser, checkIfAuthenticated } = useApp();
     const [projects, setProjects] = React.useState<ProjectType[]>([]);
     const [keyword, setKeyword] = React.useState('');
     const [page, setPage] = React.useState(1);
@@ -15,45 +17,35 @@ const Dashboard = () => {
     const [wholeCount, setWholeCount] = React.useState(0);
     const [firstVisible, setFirstVisible] = React.useState<QueryDocumentSnapshot>();
     const [lastVisible, setLastVisible] = React.useState<QueryDocumentSnapshot>();
-    const [q, setQuery] = React.useState(query(collection(db, 'projects'), orderBy("createdAt", 'desc'), limit(pageSize)));
-    // const [titleList, setTitleList] = React.useState<string[]>([]);
-    // const [filter, setFilter] = React.useState<string[]>([]);
+    const [q, setQuery] = React.useState(genQuery('projects', {
+        orderBy: {
+            fieldName: "createdAt",
+            direct: "desc"
+        },
+        limit: pageSize
+    }));
 
     const fetch = async () => {
-        getCountFromServer(collection(db, 'projects')).then(snapshot => setWholeCount(snapshot.data().count))
-        getDocs(q).then(querySnapshot => {
-            if (querySnapshot.empty) {
+        getProjectsCount().then(count => setWholeCount(count))
+        getDocuments(q).then(docs => {
+            if (docs.length == 0) {
                 setProjects([]);
             } else {
-                setFirstVisible(querySnapshot.docs[0]);
-                setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
-                setCount(querySnapshot.docs.length);
-                setProjects(querySnapshot.docs.map(doc => ({...doc.data(), id: doc.id} as ProjectType)))
+                setFirstVisible(docs[0]);
+                setLastVisible(docs[docs.length - 1]);
+                setCount(docs.length);
+                setProjects(docs.map(doc => ({...doc.data(), id: doc.id} as ProjectType)))
             }
         });
     }
 
     React.useEffect(() => {
+        checkIfAuthenticated && checkIfAuthenticated();
+    }, [checkIfAuthenticated])
+
+    React.useEffect(() => {
         fetch();
     }, [q])
-
-    // React.useEffect(() => {
-    //     getDocs(collection(db, "projects")).then(querySnapshot => {
-    //         setWholeCount(querySnapshot.docs.length);
-    //         setTitleList(querySnapshot.docs.map(doc => (doc.data()?.title)));
-    //     });
-    // }, [])
-
-    // React.useEffect(() => {
-    //     if (titleList.length === 0) return;
-    //     const filter = titleList.filter(title => title.toLowerCase().includes(keyword.toLowerCase()));
-    //     setWholeCount(filter.length);
-    //     if (filter.length === 0) {
-    //         setProjects([])
-    //         return;
-    //     }
-    //     setQuery(query(collection(db, 'projects'), where('title', 'in', filter), orderBy('createdAt', 'desc'), limit(pageSize)));
-    // }, [keyword])
 
     return (
         <Container px="8" py="32" maxW="container.2xl">
@@ -127,11 +119,25 @@ const Dashboard = () => {
                     <Flex direction="row" alignItems="center" gap="2">
                         <Button colorScheme="white" px="3" variant="outline" onClick={() => {
                             setPage(page - 1);
-                            setQuery(query(collection(db, 'projects'), orderBy('createdAt', 'desc'), endBefore(firstVisible), limit(pageSize)));
+                            setQuery(genQuery("projects", {
+                                orderBy: {
+                                    fieldName: "createdAt",
+                                    direct: "desc"
+                                },
+                                limit: pageSize,
+                                endBefore: firstVisible
+                            }))
                         }} isDisabled={page <= 1}>{`<`} Previous</Button>
                         <Button colorScheme="white" px="6" variant="outline" onClick={() => {
                             setPage(page + 1);
-                            setQuery(query(collection(db, 'projects'), orderBy('createdAt', 'desc'), startAfter(lastVisible), limit(pageSize)));
+                            setQuery(genQuery("projects", {
+                                orderBy: {
+                                    fieldName: "createdAt",
+                                    direct: "desc"
+                                },
+                                limit: pageSize,
+                                startAfter: lastVisible
+                            }))
                         }} isDisabled={page * pageSize >= wholeCount}>Next {`>`}</Button>
                     </Flex>
                 </Flex>

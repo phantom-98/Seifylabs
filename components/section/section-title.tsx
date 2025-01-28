@@ -6,14 +6,14 @@ import {
   useMultiStyleConfig,
 } from '@chakra-ui/react'
 
-export interface SectionTitleProps extends Omit<StackProps, 'title'> {
+export interface ISectionTitleProps extends Omit<StackProps, 'title'> {
   title: React.ReactNode
   description?: React.ReactNode
   align?: 'left' | 'center'
   variant?: string
 }
 
-export const SectionTitle: React.FC<SectionTitleProps> = (props) => {
+export const SectionTitle: React.FC<ISectionTitleProps> = (props) => {
   const { title, description, align, variant, ...rest } = props
   const styles = useMultiStyleConfig('SectionTitle', { variant })
 

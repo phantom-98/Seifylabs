@@ -3,3 +3,5 @@ node_modules/
 .next/
 .vscode/
 .env.local
+package-lock.json
+pnpm-lock.yaml

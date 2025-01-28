@@ -1,19 +1,18 @@
 import { ResponsiveValue, SimpleGrid, Stack } from '@chakra-ui/react'
 import {
   Section,
-  SectionProps,
+  ISectionProps,
   SectionTitle,
-  SectionTitleProps,
+  ISectionTitleProps,
 } from 'components/section'
-import { Testimonial } from './testimonial'
 
-export interface TestimonialsProps
-  extends Omit<SectionProps, 'title'>,
-    Pick<SectionTitleProps, 'title' | 'description'> {
+export interface ITestimonialsProps
+  extends Omit<ISectionProps, 'title'>,
+    Pick<ISectionTitleProps, 'title' | 'description'> {
   columns?: ResponsiveValue<number>
 }
 
-export const Testimonials: React.FC<TestimonialsProps> = (props) => {
+export const Testimonials: React.FC<ITestimonialsProps> = (props) => {
   const { children, title, columns = [1, null, 2], ...rest } = props
   return (
     <Section {...rest}>

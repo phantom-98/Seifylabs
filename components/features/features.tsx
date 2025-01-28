@@ -14,18 +14,18 @@ import {
   SystemProps,
 } from '@chakra-ui/react'
 
-import { Section, SectionTitle, SectionTitleProps } from 'components/section'
+import { Section, SectionTitle, ISectionTitleProps } from 'components/section'
 
 const Revealer = ({ children }: any) => {
   return children
 }
 
-export interface FeaturesProps
-  extends Omit<SectionTitleProps, 'title' | 'variant'>,
+export interface IFeaturesProps
+  extends Omit<ISectionTitleProps, 'title' | 'variant'>,
     ThemingProps<'Features'> {
   title?: React.ReactNode
   description?: React.ReactNode
-  features: Array<FeatureProps>
+  features: Array<IFeatureProps>
   columns?: ResponsiveValue<number>
   spacing?: string | number
   aside?: React.ReactChild
@@ -34,7 +34,7 @@ export interface FeaturesProps
   innerWidth?: SystemProps['maxW']
 }
 
-export interface FeatureProps {
+export interface IFeatureProps {
   title?: React.ReactNode
   description?: React.ReactNode
   icon?: any
@@ -45,7 +45,7 @@ export interface FeatureProps {
   delay?: number
 }
 
-export const Feature: React.FC<FeatureProps> = (props) => {
+export const Feature: React.FC<IFeatureProps> = (props) => {
   const {
     title,
     description,
@@ -75,7 +75,7 @@ export const Feature: React.FC<FeatureProps> = (props) => {
   )
 }
 
-export const Features: React.FC<FeaturesProps> = (props) => {
+export const Features: React.FC<IFeaturesProps> = (props) => {
   const {
     title,
     description,

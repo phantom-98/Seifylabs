@@ -3,11 +3,12 @@ import { Box, Button, Container, Flex, Heading, HStack, Image, Input, Modal, Mod
 import { DatePicker, DatePickerCalendar, DatePickerTimeField, DateValue } from "@saas-ui/date-picker";
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import db from "utils/firestore";
-import { collection, addDoc, getDocs } from "firebase/firestore"; 
-import { formatWalletAddress } from "utils/utils";
+import { saveProject } from "utils/firestore";
+import { formatWalletAddress } from "utils/web3";
+import useApp from "components/context/app-context";
 
 const CreateProject = () => {
+    const { checkIfAuthenticated } = useApp();
     const [ step, setStep ] = React.useState(1);
     const [ title, setTitle ] = React.useState('');
     const [ scope, setScope ] = React.useState('');
@@ -25,7 +26,7 @@ const CreateProject = () => {
 
     const submit = async () => {
         setSpinner(true);
-        const docRef = await addDoc(collection(db, "projects"), {
+        const id = await saveProject({
             title,
             scope,
             token,
@@ -37,8 +38,12 @@ const CreateProject = () => {
             createdAt: new Date()
         });
         setSpinner(false);
-        setLink(docRef.id);
+        setLink(id);
     }
+
+    React.useEffect(() => {
+        checkIfAuthenticated && checkIfAuthenticated();
+    }, [checkIfAuthenticated])
 
     return (
         <Container px="8" py="32" maxW="container.2xl">
@@ -135,11 +140,11 @@ const CreateProject = () => {
                                         p={4}
                                         colorScheme="whiteAlpha"
                                         variant="solid"
-                                        isActive={wallet === "Metamask"}
+                                        isActive={wallet === "MetaMask"}
                                         onClick={() => {
-                                            setWallet("Metamask")
+                                            setWallet("MetaMask")
                                         }}
-                                    ><Text fontSize={'lg'} color={'black'}>Metamask</Text></Button>
+                                    ><Text fontSize={'lg'} color={'black'}>MetaMask</Text></Button>
                                 </HStack>
                                 <Text fontSize={'md'}>Wallet Connected: {formatWalletAddress(address)}</Text>
                                 <Text fontSize={'md'} color="#8952e0">{token} Balance: {balance} {token}</Text>

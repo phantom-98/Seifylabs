@@ -8,14 +8,14 @@ import {
   HTMLChakraProps,
 } from '@chakra-ui/react'
 
-export interface SectionProps
+export interface ISectionProps
   extends HTMLChakraProps<'div'>,
     ThemingProps<'Section'> {
   children: React.ReactNode
   innerWidth?: StyleProps['width']
 }
 
-export const Section: React.FC<SectionProps> = (props) => {
+export const Section: React.FC<ISectionProps> = (props) => {
   const { children, innerWidth = 'container.lg', className, ...rest } = props
   const styles = useStyleConfig('Section', rest)
 

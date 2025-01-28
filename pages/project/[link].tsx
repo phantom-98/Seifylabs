@@ -3,10 +3,10 @@ import * as React from "react";
 import { useRouter } from "next/router";
 import { DatePicker, DatePickerCalendar, DatePickerTimeField } from "@saas-ui/date-picker";
 import { CheckCircleIcon } from "@chakra-ui/icons";
-import db from "utils/firestore";
-import { getDoc, doc, setDoc } from "firebase/firestore"; 
-import { formatWalletAddress, ProjectType } from "utils/utils";
+import { getProject, updateProject } from "utils/firestore";
+import { formatWalletAddress } from "utils/web3";
 import { parseDateTime } from "@saas-ui/date-picker";
+import { ProjectType } from "utils/types";
 
 const Project = () => {
 
@@ -21,7 +21,7 @@ const Project = () => {
     const accept = async () => {
         if (!payeeAddress) return;
         setSpinner(true);
-        const snapshot = await setDoc(doc(db, "projects", `${router.query.link}`), {
+        await updateProject(`${router.query.link}`, {
             ...project,
             status: "Accepted",
             payeeAddress
@@ -30,7 +30,7 @@ const Project = () => {
         setSpinner(false);
     }
     const reject = async () => {
-        const snapshot = await setDoc(doc(db, "projects", `${router.query.link}`), {
+        await updateProject(`${router.query.link}`, {
             ...project,
             status: "Rejected",
         })
@@ -40,8 +40,8 @@ const Project = () => {
     React.useEffect(() => {
         async function fetch() {
             if (router.query.link) {
-                const querySnapshot = await getDoc(doc(db, "projects", `${router.query.link}`));
-                setProject({...querySnapshot.data()} as ProjectType);
+                const project = await getProject(`${router.query.link}`);
+                setProject({...project} as ProjectType);
             }
         }
         fetch();

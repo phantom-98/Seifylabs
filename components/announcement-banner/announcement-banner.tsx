@@ -20,14 +20,14 @@ import {
 import { FiArrowRight } from "react-icons/fi";
 import { FallInPlace } from "../motion/fall-in-place";
 
-export interface AnnouncementBannerProps {
+export interface IAnnouncementBannerProps {
   title: string;
   description: string;
   href: string;
   action?: string;
 }
 
-export const AnnouncementBanner: React.FC<AnnouncementBannerProps> = (
+export const AnnouncementBanner: React.FC<IAnnouncementBannerProps> = (
   props
 ) => {
   const { title, description, href, action } = props;

@@ -13,26 +13,26 @@ import {
   ButtonLinkProps,
 } from "components/button-link/button-link";
 import { BackgroundGradient } from "components/gradients/background-gradient";
-import { Section, SectionProps, SectionTitle } from "components/section";
+import { Section, ISectionProps, SectionTitle } from "components/section";
 import React from "react";
 import { FiCheck } from "react-icons/fi";
 
-export interface PricingPlan {
+export interface IPricingPlan {
   id: string;
   title: React.ReactNode;
   description: React.ReactNode;
   price: React.ReactNode;
-  features: Array<PricingFeatureProps | null>;
+  features: Array<IPricingFeatureProps | null>;
   action: ButtonLinkProps & { label?: string };
   isRecommended?: boolean;
 }
 
-export interface PricingProps extends SectionProps {
+export interface IPricingProps extends ISectionProps {
   description: React.ReactNode;
-  plans: Array<PricingPlan>;
+  plans: Array<IPricingPlan>;
 }
 
-export const Pricing: React.FC<PricingProps> = (props) => {
+export const Pricing: React.FC<IPricingProps> = (props) => {
   const { children, plans, title, description, ...rest } = props;
 
   return (
@@ -96,12 +96,12 @@ const PricingFeatures: React.FC<React.PropsWithChildren<{}>> = ({
   );
 };
 
-export interface PricingFeatureProps {
+export interface IPricingFeatureProps {
   title: React.ReactNode;
   iconColor?: string;
 }
 
-const PricingFeature: React.FC<PricingFeatureProps> = (props) => {
+const PricingFeature: React.FC<IPricingFeatureProps> = (props) => {
   const { title, iconColor = "primary.500" } = props;
   return (
     <HStack>
@@ -113,13 +113,13 @@ const PricingFeature: React.FC<PricingFeatureProps> = (props) => {
   );
 };
 
-export interface PricingBoxProps extends Omit<StackProps, "title"> {
+export interface IPricingBoxProps extends Omit<StackProps, "title"> {
   title: React.ReactNode;
   description: React.ReactNode;
   price: React.ReactNode;
 }
 
-const PricingBox: React.FC<PricingBoxProps> = (props) => {
+const PricingBox: React.FC<IPricingBoxProps> = (props) => {
   const { title, description, price, children, ...rest } = props;
   return (
     <VStack
